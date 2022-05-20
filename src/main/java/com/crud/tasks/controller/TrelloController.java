@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
-    @RestController
+@RestController
     @RequestMapping("v1/trello")
     @RequiredArgsConstructor
     @CrossOrigin("*")
@@ -26,6 +27,8 @@ import java.util.List;
 
             trelloBoards
                     .stream()
+                    .filter(e-> e.getName()!=null)
+                    .filter(e-> e.getId()!=null)
                     .filter(e-> e.getName().contains("Kodilla"))
                     .forEach(trelloBoardDto -> {
                 System.out.println(trelloBoardDto.getId() + " " + trelloBoardDto.getName());
