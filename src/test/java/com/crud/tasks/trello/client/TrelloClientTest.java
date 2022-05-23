@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -61,14 +62,14 @@ class TrelloClientTest {
         when(trelloConfig.getTrelloApiEndpoint()).thenReturn("http://test.com");
         when(trelloConfig.getTrelloAppKey()).thenReturn("test");
         when(trelloConfig.getTrelloToken()).thenReturn("test");
-        when(trelloConfig.getTrelloUserName()).thenReturn("test");
+        //when(trelloConfig.getTrelloUserName()).thenReturn("test");
         TrelloCardDto trelloCardDto = new TrelloCardDto(
                 "test task",
                 "Test Description",
                 "top",
                 "test_id"
         );
-        URI uri = new URI("http://test.com/cards?key=test&token=test&name=Test%20task&desc=Test%20Description&pos=top&idList=test_id");
+        URI uri = new URI("http://test.com/cards?key=test&token=test&name=test%20task&desc=Test%20Description&pos=top&idList=test_id");
 
         CreatedTrelloCard createdTrelloCard = new CreatedTrelloCard(
                 "1",
@@ -86,4 +87,14 @@ class TrelloClientTest {
         assertEquals("http://test.com", newCard.getShortUrl());
     }
 
+    @Test
+    public void shouldReturnEmptyList() throws URISyntaxException {
+        // Given
+        URI uri = new URI("http://test.com/cards?key=test&token=test&name=test%20task&desc=Test%20Description&pos=top&idList=test_id");
+        when(restTemplate.getForObject(uri, TrelloBoardDto[].class)).thenReturn(null);
+        // When
+        List<TrelloBoardDto> emptyBoard = trelloClient.getTrelloBoards();
+        // Then
+        assertEquals(0, emptyBoard.size());
+    }
 }
