@@ -18,27 +18,23 @@ public class EmailScheduler {
 
     private static final String SUBJECT = "Tasks: Once a day email";
 
-    @Scheduled(cron = "0 0 10 * * *")
+    @Scheduled(fixedDelay = 10000)
     public void sendInformationEmail() {
         long size = taskRepository.count();
+        String singularOrPlural;
         if (size == 1L) {
-            simpleEmailService.send(
-                    Mail.builder()
-                            .mailTo(adminConfig.getAdminMail())
-                            .subject(SUBJECT)
-                            .message("Currently in database you got: " + size + " task")
-                            .toCc(null)
-                            .build()
-            );
+            singularOrPlural = " task";
         } else {
-            simpleEmailService.send(
+            singularOrPlural = " tasks";
+        }
+
+        simpleEmailService.send(
                     Mail.builder()
                             .mailTo(adminConfig.getAdminMail())
                             .subject(SUBJECT)
-                            .message("Currently in database you got: " + size + " tasks")
+                            .message("Currently in database you got: " + size + singularOrPlural)
                             .toCc(null)
                             .build()
             );
         }
     }
-}
