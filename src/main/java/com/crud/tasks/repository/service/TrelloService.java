@@ -1,4 +1,4 @@
-package com.crud.tasks.service;
+package com.crud.tasks.repository.service;
 
 import com.crud.tasks.config.AdminConfig;
 import com.crud.tasks.domain.CreatedTrelloCardDto;

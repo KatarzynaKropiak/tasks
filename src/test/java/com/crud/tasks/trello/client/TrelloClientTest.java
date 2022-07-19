@@ -1,8 +1,6 @@
 package com.crud.tasks.trello.client;
 
-import com.crud.tasks.domain.CreatedTrelloCardDto;
-import com.crud.tasks.domain.TrelloBoardDto;
-import com.crud.tasks.domain.TrelloCardDto;
+import com.crud.tasks.domain.*;
 import com.crud.tasks.mapper.TrelloMapper;
 import com.crud.tasks.trello.config.TrelloConfig;
 import org.junit.jupiter.api.Test;
@@ -68,6 +66,16 @@ class TrelloClientTest {
         when(trelloConfig.getTrelloAppKey()).thenReturn("test");
         when(trelloConfig.getTrelloToken()).thenReturn("test");
         //when(trelloConfig.getTrelloUserName()).thenReturn("test");
+        Trello trello = new Trello();
+        trello.setCard(1);
+        trello.setBoard(1);
+
+        AttachmentsByType attachment = new AttachmentsByType();
+        attachment.setTrello(trello);
+
+        Badges badges = new Badges();
+        badges.setAttachmentsByType(attachment);
+
         TrelloCardDto trelloCardDto = new TrelloCardDto(
                 "test task",
                 "Test Description",
@@ -79,7 +87,8 @@ class TrelloClientTest {
         CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto(
                 "1",
                 "test task",
-                "http://test.com"
+                "http://test.com",
+                badges
         );
 
         when(restTemplate.postForObject(uri, null, CreatedTrelloCardDto.class)).thenReturn(createdTrelloCardDto);
@@ -90,6 +99,8 @@ class TrelloClientTest {
         assertEquals("1", newCard.getId());
         assertEquals("test task", newCard.getName());
         assertEquals("http://test.com", newCard.getShortUrl());
+        assertEquals(1, trello.getCard());
+        assertEquals(1, trello.getBoard());
     }
 
 //    @Test

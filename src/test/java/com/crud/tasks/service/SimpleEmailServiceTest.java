@@ -1,8 +1,7 @@
 package com.crud.tasks.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.crud.tasks.domain.Mail;
+import com.crud.tasks.repository.service.SimpleEmailService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -12,8 +11,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-
-import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 class SimpleEmailServiceTest {
