@@ -109,7 +109,7 @@ class TrelloFacadeTest {
         //Given
         TrelloCardDto testCardDto = new TrelloCardDto("name", "description", "top", "1");
         TrelloCard mappedTrelloCard = new TrelloCard("name", "description", "top", "1");
-        CreatedTrelloCardDto cardDto = new CreatedTrelloCardDto("1", "name", "shortUrl", new Badges());
+        CreatedTrelloCardDto cardDto = new CreatedTrelloCardDto("1", "name", "shortUrl");
 
         when(trelloMapper.mapToCard(testCardDto)).thenReturn(mappedTrelloCard);
         when(trelloMapper.mapToCardDto(mappedTrelloCard)).thenReturn(testCardDto);
@@ -124,6 +124,6 @@ class TrelloFacadeTest {
         assertEquals(createdTrelloCardDto.getId(), cardDto.getId());
         assertEquals(createdTrelloCardDto.getName(), cardDto.getName());
         assertEquals(createdTrelloCardDto.getShortUrl(), cardDto.getShortUrl());
-        assertEquals(createdTrelloCardDto.getBadges(), cardDto.getBadges());
+    //    assertEquals(createdTrelloCardDto.getBadges(), cardDto.getBadges());
     }
 }
