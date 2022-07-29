@@ -49,6 +49,8 @@ public class SimpleEmailService {
 //        mailMessage.setText(mailCreatorService.buildTrelloCardEmail(mail.getMessage()));
 //
 //        return mailMessage;
+//    }
+//}
 
     public void sendDaily(final Mail mail) {
         log.info("Starting daily email preparation...");
@@ -61,12 +63,13 @@ public class SimpleEmailService {
     }
 
     private MimeMessagePreparator createDailyMimeMessage(final Mail mail) {
-    return mimeMessage -> {
-        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-        messageHelper.setTo(mail.getMailTo());
-        messageHelper.setSubject(mail.getSubject());
-        messageHelper.setText(mailCreatorService.buildTrelloDailyNotificationEmail(mail.getMessage()), true);
-    };
+        return mimeMessage -> {
+            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+            messageHelper.setTo(mail.getMailTo());
+            messageHelper.setSubject(mail.getSubject());
+            messageHelper.setText(mailCreatorService.buildTrelloDailyNotificationEmail(mail.getMessage()), true);
+        };
     }
 
 }
+
